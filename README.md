@@ -1,5 +1,5 @@
 # FedANNS
-This repository hosts FedANNS, a prototype system for secure and efficient approximate nearest neighbor search over federated vector databases. This repository is the code release for the full paper **`1831-Full Paper.pdf`**.
+This repository hosts FedANNS, a prototype system for secure and efficient approximate nearest neighbor search over federated vector databases. This repository is the code release for the full paper [**`1831-Full Paper.pdf`**](./1831-Full%20Paper.pdf).
 
 ## Environment
 
