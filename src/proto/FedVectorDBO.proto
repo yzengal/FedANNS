@@ -1,0 +1,109 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package FedVectorDBO;
+
+service FedSqlService {
+    rpc ExecuteKnnQuery(KnnSql) returns (google.protobuf.Empty) {}
+
+    rpc GetKnnCandidate(CandSql) returns (KnnCand) {}
+
+    rpc ClearKnnCandidate(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+    rpc GetMpcComm(google.protobuf.Empty) returns (MpcComm) {}
+
+    rpc StartMinMpc(MinMpcBobList) returns (google.protobuf.Empty) {}
+
+    rpc CollectMinMpc(MinMpcBobList) returns (MinMpcSecretShares) {}
+
+    rpc RequestMinMpcBob(MinMpcAlicePair) returns (google.protobuf.Empty) {}
+
+    rpc SetSearchParameter(SearchParam) returns (google.protobuf.Empty) {}
+
+    rpc ExecuteKnnJoin(KnnJoinSql) returns (google.protobuf.Empty) {}
+
+    rpc GetKnnJoinCandidate(KnnJoinCandReq) returns (KnnJoinCand) {}
+    
+    rpc ClearKnnJoinCandidate(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+
+    rpc JoinStartMinMpc(JoinMinMpcBobList) returns (google.protobuf.Empty) {}
+
+    rpc JoinCollectMinMpc(JoinMinMpcBobList) returns (JoinMinMpcSecretShares) {}
+
+    rpc JoinRequestMinMpcBob(JoinMinMpcAlicePair) returns (google.protobuf.Empty) {}
+}
+
+message SearchParam {
+    string search_param_name = 1;
+    int32 search_param_value = 2;
+}
+
+message KnnSql {
+    int64 vid = 1;
+    int32 k = 2;
+    repeated float data = 3;
+}
+
+message CandSql {
+    int32 k = 1;
+}
+
+message VectorData {
+    int32 vid = 1;
+    repeated float data = 2;
+}
+
+message MpcComm {
+    double comm = 1;
+}
+
+message MinMpcBobList {
+    int32 bob = 1;
+}
+
+message JoinMinMpcBobList {
+    int32 bob = 1;
+    repeated int32 qid = 2;
+}
+
+message MinMpcAlicePair {
+    int32 alice = 1;
+    int32 r = 2;
+    double value = 3;
+}
+
+message JoinMinMpcAlicePair {
+    repeated int32 alice = 1;
+    repeated int32 r = 2;
+    repeated double value = 3;
+    repeated int32 qid = 4;
+}
+
+message MinMpcSecretShares {
+    repeated int32 r = 1;
+}
+
+message JoinMinMpcSecretShares {
+    repeated int32 qid = 1;
+    repeated MinMpcSecretShares min_mss = 2;
+}
+
+message KnnJoinCandReq {
+    repeated int32 qid = 1;
+    repeated int32 k = 2;
+}
+
+message KnnCand {
+    int32 qid = 1;
+    repeated VectorData knn = 2;
+    repeated float dist = 3;
+}
+
+message KnnJoinCand {
+    repeated KnnCand result = 1;
+}
+
+message KnnJoinSql {
+    repeated int32 k = 1;
+    repeated VectorData queries = 2;
+}

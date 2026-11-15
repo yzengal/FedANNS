@@ -1,0 +1,83 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package Broker;
+
+service BrokerService {
+    rpc RequestRandomValue(RequestRandom) returns (RandomValue) {}
+
+    rpc RequestSecretShareBob(PerturbResult) returns (SecretShare) {}
+
+    rpc RequestSecretShareAlice(RequestSecretShare) returns (SecretShare) {}
+
+    rpc RequestSecretShareListAlice(RequestSecretShareList) returns (SecretShareList) {}
+
+    rpc JoinRequestSecretShareBob(JoinPerturbResult) returns (JoinSecretShare) {}
+
+    rpc JoinRequestSecretShareAlice(JoinRequestSecretShare) returns (JoinSecretShare) {}
+
+    rpc JoinRequestSecretShareListAlice(JoinRequestSecretShareList) returns (JoinSecretShareList) {}
+}
+
+message PerturbResult {
+    int32 alice = 1;
+    int32 bob = 2;
+    double value = 3;
+}
+
+message RequestRandom {
+    int32 alice = 1;
+    int32 m = 2;
+}
+
+message RandomValue {
+    repeated int32 r = 1;
+}
+
+message RequestSecretShare {
+    int32 alice = 1;
+    int32 bob = 2;
+}
+
+message SecretShare {
+    int32 r_zero = 1;
+    int32 r_one = 2;
+}
+
+message RequestSecretShareList {
+    int32 alice = 1;
+    int32 m = 2;
+}
+
+message SecretShareList {
+    repeated int32 r_zero = 1;
+    repeated int32 r_one = 2;
+}
+
+message JoinPerturbResult {
+    repeated int32 qid = 1;
+    repeated PerturbResult perturb_result = 2;
+}
+
+message JoinRequestSecretShare {
+    repeated int32 qid = 1;
+    repeated RequestSecretShare request_ss = 2;
+}
+
+message JoinSecretShare {
+    repeated int32 qid = 1;
+    repeated SecretShare secret_share = 2;
+}
+
+message JoinRequestSecretShareList {
+    repeated int32 qid = 1;
+    repeated RequestSecretShareList request_ssl = 2;
+}
+
+message JoinSecretShareList {
+    repeated int32 qid = 1;
+    repeated SecretShareList secret_share_list = 2;
+}
+
+
+
